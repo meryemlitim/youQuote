@@ -15,3 +15,4 @@ Route::get('/',function(){
 Route::apiResource('quote',QuoteController::class);
 Route::get('random', [QuoteController::class, 'randomQuote']);
 Route::get('search/{length}', [QuoteController::class, 'searchQuote']);
+Route::get('popular', [QuoteController::class, 'popularQuote']);

@@ -34,8 +34,10 @@ class QuoteController extends Controller
      * Display the specified resource.
      */
     public function show(Quote $quote)
-    {
+    {   
+        $quote->increment('popular');
         return $quote->text;
+
     }
 
     /**
@@ -71,6 +73,8 @@ class QuoteController extends Controller
     // $quotes = Quote::whereRaw('LENGTH(text) <= ?', [$length])->get();
     $allQuote=Quote::all();
     $filteredQuotes = $allQuote->filter(function ($quote) use ($length) {
+        // $quote->increment('popular');
+
         return str_word_count($quote->text) <= $length;
     });
     if($filteredQuotes->isEmpty()){
@@ -94,5 +98,12 @@ class QuoteController extends Controller
 
     return $quote->text;
 }
+
+public function popularQuote(){
+    $quote=Quote::orderByDesc('popular')->take(3)->get();
+    return response()->json($quote->pluck('text'));
+}
+
+
 
 }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('quotes', function (Blueprint $table) {
             $table->id();
             $table->text('text');
-            $table->integer('popular')->nullable();
+            $table->integer('popular')->default(0);
             $table->timestamps();
         });
     }
