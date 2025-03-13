@@ -65,6 +65,27 @@ class QuoteController extends Controller
     //     return $quote;
 
     // }
+    public function searchQuote($length)
+{
+    // Get quotes with text length less than or equal to the given length
+    // $quotes = Quote::whereRaw('LENGTH(text) <= ?', [$length])->get();
+    $allQuote=Quote::all();
+    $filteredQuotes = $allQuote->filter(function ($quote) use ($length) {
+        return str_word_count($quote->text) <= $length;
+    });
+    if($filteredQuotes->isEmpty()){
+        return response()->json(['message'=>'No quote with that number of words'],404);
+    }
+    return $filteredQuotes->pluck('text');
+
+   
+    }
+
+    
+    
+
+
+    // Return the quotes as a JSON response
 
 
     public function randomQuote()
